@@ -207,11 +207,6 @@ marimo/_lsp/
 __marimo__/
 
 # Project-specific (League of Legends Win Prediction)
-# Data files
-data/
-*.csv
-*.zip
-
 # Model checkpoints
 checkpoints/
 *.ckpt
