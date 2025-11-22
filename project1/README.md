@@ -1,57 +1,41 @@
-# League of Legends Win Prediction with PyTorch Lightning
+# LoL Win Prediction Model
 
-This project implements a binary classification model to predict League of Legends match outcomes using PyTorch Lightning, with experiment tracking via Weights & Biases and hyperparameter optimization using Optuna.
+This project trains a binary classification model to predict League of Legends match outcomes using PyTorch Lightning.
 
-## 🎯 Project Overview
+**Model Details:**
 
-**Problem:** Predict whether the blue team wins based on early-game statistics (first 10 minutes)
+- Architecture: MLP (Multi-Layer Perceptron)
+- Dataset: 9,879 Diamond-ranked matches
+- Features: 38 early-game statistics from first 10 minutes
+- Target: Binary (blue wins: 0 or 1)
+- Tools: PyTorch Lightning, Weights & Biases, Optuna
 
-**Approach:**
+## Setup
 
-- Multi-layer perceptron (MLP) for tabular data
-- PyTorch Lightning for clean training code
-- Weights & Biases for experiment tracking
-- Optuna for automated hyperparameter optimization
-
-**Dataset:** 9,879 Diamond-ranked League of Legends matches  
-**Features:** 38 early-game statistics (gold, kills, objectives, vision, etc.)  
-**Target:** Binary classification (blue wins: 0 or 1)
-
-## 🚀 Quick Start
-
-### 1. Install Dependencies
+### 1. Install dependencies
 
 ```bash
-# Create virtual environment (recommended)
-python -m venv venv
-
-# Activate
-venv\Scripts\activate  # Windows
-# source venv/bin/activate  # Linux/Mac
-
-# Install packages
 pip install -r requirements.txt
 ```
 
-### 2. Download Dataset
+### 2. Download dataset
 
 1. Visit: https://www.kaggle.com/datasets/bobbyscience/league-of-legends-diamond-ranked-games-10-min
-2. Download and extract `high_diamond_ranked_10min.csv` to `data/` folder
+2. Download `high_diamond_ranked_10min.csv` to `data/` folder
 
-### 3. Set Up WandB (Optional but Recommended)
+### 3. Set up WandB (optional)
 
 ```bash
 wandb login
-# Enter your API key from https://wandb.ai/authorize
 ```
 
-For offline mode, add this to notebook:
+For offline mode:
 
 ```python
 import os
 os.environ['WANDB_MODE'] = 'offline'
 ```
 
-### 4. Run the Notebook
+### 4. Run notebook
 
-Open `lol_win_prediction.ipynb` in Jupyter or VS Code and run all cells.
+Open `lol_win_prediction.ipynb` and run all cells.
