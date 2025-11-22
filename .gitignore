@@ -212,6 +212,7 @@ checkpoints/
 *.ckpt
 *.pth
 *.pt
+model/
 
 # Weights & Biases
 wandb/
