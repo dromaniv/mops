@@ -1,4 +1,4 @@
-# What This Is
+# Model Serving
 
 This project takes the LoL win prediction model from Project 1 and serves it as a REST API using BentoML.
 
