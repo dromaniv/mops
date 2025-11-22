@@ -112,12 +112,11 @@ class LolWinPredictionService:
         print(f"Model loaded: {self.input_dim} features")
     
     @bentoml.api
-    def predict(self, features: MatchFeatures) -> PredictionResponse:
+    def predict(self, features: dict) -> PredictionResponse:
         """Predict match outcome"""
         
         # Convert to array
-        feature_dict = features.dict()
-        feature_array = np.array([feature_dict[name] for name in self.feature_names], dtype=np.float32)
+        feature_array = np.array([features[name] for name in self.feature_names], dtype=np.float32)
         
         # Normalize
         feature_array = (feature_array - self.scaler_mean) / self.scaler_scale
@@ -144,12 +143,40 @@ class LolWinPredictionService:
         )
     
     @bentoml.api
-    def predict_batch(self, features_list: List[MatchFeatures]) -> List[PredictionResponse]:
+    def predict_batch(self, matches: List[Dict]) -> List[PredictionResponse]:
         """Predict multiple matches"""
-        return [self.predict(features) for features in features_list]
+        results = []
+        for match in matches:
+            # Convert to array
+            feature_array = np.array([match[name] for name in self.feature_names], dtype=np.float32)
+            
+            # Normalize
+            feature_array = (feature_array - self.scaler_mean) / self.scaler_scale
+            
+            # Predict
+            input_tensor = torch.FloatTensor(feature_array).unsqueeze(0)
+            with torch.no_grad():
+                logits = self.model(input_tensor)
+                probability = torch.sigmoid(logits).item()
+            
+            # Get prediction and confidence
+            prediction = 1 if probability > 0.5 else 0
+            if probability > 0.7 or probability < 0.3:
+                confidence = "High"
+            elif probability > 0.6 or probability < 0.4:
+                confidence = "Medium"
+            else:
+                confidence = "Low"
+            
+            results.append(PredictionResponse(
+                prediction=prediction,
+                probability=round(probability, 4),
+                confidence=confidence
+            ))
+        return results
     
     @bentoml.api
-    def health(self) -> Dict[str, Any]:
+    def health(self, dummy: int = 0) -> Dict[str, Any]:
         """Health check"""
         return {
             "status": "healthy",

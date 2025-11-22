@@ -8,26 +8,6 @@ This project takes the LoL win prediction model from Project 1 and serves it as 
 - Input: 38 features from first 10 minutes of game
 - Test Accuracy: ~73%
 
-## Files
-
-```
-project2/
-├── service.py              # BentoML API service
-├── gradio_app.py           # Web UI for testing
-├── requirements.txt        # Dependencies
-├── bentofile.yaml          # BentoML config
-├── test_setup.py           # Setup checker
-├── quickstart.ps1          # Setup helper
-├── model/                  # Model files (exported from notebook)
-│   ├── lol_model.pt
-│   ├── model_metadata.pkl
-│   ├── feature_names.pkl
-│   └── scaler.pkl
-└── client_examples/        # API client examples
-    ├── python_client.py
-    └── powershell_client.ps1
-```
-
 ## Setup
 
 ### 1. Install dependencies
@@ -40,13 +20,7 @@ pip install -r requirements.txt
 
 Run the last cell in `../project1/lol_win_prediction.ipynb` to export the model files.
 
-### 3. Test setup
-
-```bash
-python test_setup.py
-```
-
-### 4. Start service
+### 3. Start service
 
 ```bash
 bentoml serve service:LolWinPredictionService
@@ -56,7 +30,7 @@ API runs at: `http://localhost:3000`
 
 ## API Endpoints
 
-- `GET /health` - Check if service is running
+- `POST /health` - Check if service is running
 - `POST /predict` - Predict single match
 - `POST /predict_batch` - Predict multiple matches
 
@@ -68,14 +42,8 @@ API runs at: `http://localhost:3000`
 
 ```python
 import requests
-response = requests.get("http://localhost:3000/health")
+response = requests.post("http://localhost:3000/health", json={})
 print(response.json())
-```
-
-**PowerShell:**
-
-```powershell
-Invoke-RestMethod -Uri "http://localhost:3000/health"
 ```
 
 ### Single Prediction
@@ -99,23 +67,10 @@ print(f"Winner: {'Blue' if result['prediction'] == 1 else 'Red'}")
 print(f"Probability: {result['probability']}")
 ```
 
-**PowerShell:**
-
-```powershell
-$data = @{ blueKills = 9; redKills = 6; ... }
-$result = Invoke-RestMethod -Uri "http://localhost:3000/predict" `
-    -Method Post -Body ($data | ConvertTo-Json) `
-    -ContentType "application/json"
-```
-
 ### Run Example Clients
 
 ```bash
-# Python
-python client_examples/python_client.py
-
-# PowerShell
-.\client_examples\powershell_client.ps1
+python python_client.py
 ```
 
 ## Web UI (Optional)
