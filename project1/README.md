@@ -1,4 +1,4 @@
-# LoL Win Prediction Model
+#  Model Training
 
 This project trains a binary classification model to predict League of Legends match outcomes using PyTorch Lightning.
 
