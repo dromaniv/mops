@@ -255,28 +255,11 @@ jobs:
           docker push ${{ secrets.REGISTRY }}/lol-prediction
 ```
 
-## License
-Same as parent project - see main LICENSE file
-
-## Credits
-- Model trained with PyTorch Lightning and Optuna
-- Dataset: [League of Legends Diamond Ranked Games](https://www.kaggle.com/datasets/bobbyscience/league-of-legends-diamond-ranked-games-10-min)
-- UI: Gradio 4.0
-
-## Support
-For issues or questions:
-1. Check the logs: `docker-compose logs`
-2. Verify model files are present
-3. Check Docker and Docker Compose versions
-4. Review Gradio documentation: https://gradio.app
-
 ## Related Projects
 - **Project 1:** Model training with PyTorch Lightning
 - **Project 2:** BentoML API service and Python client
 
 ---
 
-**Author:** Dmytro Romaniv  
-**Course:** MLOps  
-**Date:** December 2024
+**Authors:** Dmytro Romaniv 151958 & Patryk Maciejewski 151960
 
